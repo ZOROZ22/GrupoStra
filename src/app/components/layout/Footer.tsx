@@ -10,7 +10,7 @@ export function Footer() {
       
       <div className="max-w-[1280px] mx-auto px-4 py-16 grid gap-12 md:grid-cols-4 relative z-10">
         <div className="space-y-5">
-          <img src={COMPANY.logo} alt="Grupo Stra" className="h-12 object-contain bg-white rounded-lg p-2" />
+          <img src={COMPANY.logo} alt="Grupo Stra" className="h-12 object-contain brightness-0 invert" />
           <p className="text-sm text-white/60 leading-relaxed">{COMPANY.tagline}</p>
           <p className="text-sm text-white/60 leading-relaxed">Segmentos: Hospitalar, Laboratorial, Veterinário e Farma. O único, este é o padrão Grupo Stra®.</p>
           <div className="flex gap-3 pt-2">
