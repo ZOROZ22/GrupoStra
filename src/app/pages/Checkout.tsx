@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { Check, CreditCard, QrCode, FileText, Building2, Truck, ShieldCheck, ChevronRight, Lock } from "lucide-react";
 import { useStore } from "../store";
@@ -13,6 +13,7 @@ export default function Checkout() {
   const { cart, clearCart, user } = useStore();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
+  const orderNumberRef = useRef<string | null>(null);
   
   const [freight, setFreight] = useState("PAC");
   const [payment, setPayment] = useState("PIX");
@@ -57,7 +58,7 @@ export default function Checkout() {
           
           <div className="bg-gray-50 rounded-2xl p-6 mb-8 text-left">
             <p className="text-gray-600 mb-2">Número do pedido:</p>
-            <p className="text-2xl font-bold text-stra-navy tracking-wider">#{Math.floor(100000 + Math.random() * 900000)}</p>
+            <p className="text-2xl font-bold text-stra-navy tracking-wider">#{orderNumberRef.current}</p>
             
             <div className="mt-6 pt-6 border-t border-gray-200 flex items-center gap-4">
               <div className="size-12 rounded-xl bg-white flex items-center justify-center border border-gray-200 shrink-0">
@@ -279,7 +280,7 @@ export default function Checkout() {
                     <h4 className="font-bold text-stra-navy text-sm uppercase tracking-wider mb-2">Itens do Pedido</h4>
                     {cart.map((i) => (
                       <div key={i.product.id} className="flex items-center gap-4 text-sm pb-4 border-b border-gray-200 last:border-0 last:pb-0">
-                        <img src={i.product.images[0]} alt="" className="size-12 object-contain bg-white rounded-md border border-gray-200 mix-blend-multiply" />
+                        <img src={i.product.images[0]} alt="" className="size-12 object-contain bg-white rounded-md border border-gray-200" />
                         <div className="flex-1 min-w-0">
                           <p className="font-bold text-stra-navy truncate">{i.product.name}</p>
                           <p className="text-gray-500">Qtd: {i.qty}</p>
@@ -320,7 +321,7 @@ export default function Checkout() {
               <Button 
                 size="lg"
                 className="bg-stra-teal hover:bg-stra-teal-dark text-white px-8 h-14 rounded-xl font-bold shadow-lg shadow-stra-teal/20 text-lg"
-                onClick={() => { if (step === 3) { clearCart(); setStep(4); } else setStep(step + 1); }}
+                onClick={() => { if (step === 3) { orderNumberRef.current = String(Date.now()).slice(-6); clearCart(); setStep(4); } else setStep(step + 1); }}
               >
                 {step === 3 ? "Confirmar pedido" : "Continuar"} <ChevronRight className="size-5 ml-1" />
               </Button>

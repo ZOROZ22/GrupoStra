@@ -33,7 +33,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-xl shadow-[0_4px_30px_rgb(0,0,0,0.03)] border-b border-gray-100/50' : 'bg-white border-b border-gray-100'}`}>
+    <header className={`sticky top-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/70 backdrop-blur-2xl shadow-[0_8px_32px_rgb(0,0,0,0.04)] border-b border-gray-200/30' : 'bg-white border-b border-gray-100'}`}>
       {/* Top utility bar - Hidden on scroll for a cleaner look */}
       <div className={`bg-stra-navy text-white text-[13px] transition-all duration-300 overflow-hidden ${scrolled ? 'h-0 opacity-0' : 'h-9 opacity-100'}`}>
         <div className="max-w-[1280px] mx-auto px-4 h-full flex items-center justify-between">
@@ -79,7 +79,7 @@ export function Header() {
                       className="w-full flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl text-left group/item transition-colors"
                     >
                       <div className="size-12 rounded-lg bg-white border border-gray-100 p-1 shrink-0 flex items-center justify-center">
-                        <img src={p.images[0]} alt="" className="max-w-full max-h-full object-contain mix-blend-multiply" />
+                        <img src={p.images[0]} alt="" className="max-w-full max-h-full object-contain" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-bold uppercase tracking-wider text-stra-teal mb-0.5">{p.brand}</p>

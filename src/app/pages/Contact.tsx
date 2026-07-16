@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 import { COMPANY } from "../data/catalog";
 import { Button } from "../components/ui/button";
@@ -12,12 +12,36 @@ export default function Contact() {
   const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const markTouched = (field: string) => setTouched((t) => ({ ...t, [field]: true }));
+
+  const errors = useMemo(() => {
+    const errs: Record<string, string> = {};
+    if (!name.trim()) errs.name = "Nome é obrigatório.";
+    if (!email.trim()) errs.email = "E-mail é obrigatório.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = "Formato de e-mail inválido.";
+    if (!phone.trim()) errs.phone = "Telefone é obrigatório.";
+    if (!subject) errs.subject = "Selecione um assunto.";
+    if (!message.trim()) errs.message = "Mensagem é obrigatória.";
+    return errs;
+  }, [name, email, phone, subject, message]);
+
+  const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setTouched({ name: true, email: true, phone: true, subject: true, message: true });
+    if (!isValid) return;
     toast.success("Mensagem enviada com sucesso! Retornaremos em breve.");
     setName(""); setEmail(""); setPhone(""); setSubject(""); setMessage("");
+    setTouched({});
   };
+
+  const fieldError = (field: string) =>
+    touched[field] && errors[field] ? (
+      <p className="text-red-500 text-xs mt-1">{errors[field]}</p>
+    ) : null;
 
   return (
     <div className="bg-gray-50 min-h-screen py-16">
@@ -33,23 +57,26 @@ export default function Contact() {
           <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xl shadow-gray-200/40 border border-gray-100">
             <h2 className="text-2xl font-bold text-stra-navy mb-8">Envie uma mensagem</h2>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <Label className="text-sm font-semibold text-gray-700 mb-2 block">Nome completo</Label>
-                  <Input required value={name} onChange={e => setName(e.target.value)} className="h-12 border-2 border-gray-200 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white" placeholder="Seu nome" />
+                  <Input value={name} onChange={e => setName(e.target.value)} onBlur={() => markTouched("name")} className={`h-12 border-2 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white ${touched.name && errors.name ? "border-red-400" : "border-gray-200"}`} placeholder="Seu nome" />
+                  {fieldError("name")}
                 </div>
                 <div>
                   <Label className="text-sm font-semibold text-gray-700 mb-2 block">E-mail corporativo</Label>
-                  <Input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="h-12 border-2 border-gray-200 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white" placeholder="voce@empresa.com" />
+                  <Input type="email" value={email} onChange={e => setEmail(e.target.value)} onBlur={() => markTouched("email")} className={`h-12 border-2 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white ${touched.email && errors.email ? "border-red-400" : "border-gray-200"}`} placeholder="voce@empresa.com" />
+                  {fieldError("email")}
                 </div>
                 <div>
                   <Label className="text-sm font-semibold text-gray-700 mb-2 block">Telefone/WhatsApp</Label>
-                  <Input required value={phone} onChange={e => setPhone(e.target.value)} className="h-12 border-2 border-gray-200 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white" placeholder="(00) 00000-0000" />
+                  <Input value={phone} onChange={e => setPhone(e.target.value)} onBlur={() => markTouched("phone")} className={`h-12 border-2 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white ${touched.phone && errors.phone ? "border-red-400" : "border-gray-200"}`} placeholder="(00) 00000-0000" />
+                  {fieldError("phone")}
                 </div>
                 <div>
                   <Label className="text-sm font-semibold text-gray-700 mb-2 block">Assunto</Label>
-                  <select required value={subject} onChange={e => setSubject(e.target.value)} className="w-full h-12 border-2 border-gray-200 rounded-xl px-4 text-gray-700 focus:border-stra-teal bg-gray-50 focus:bg-white outline-none">
+                  <select value={subject} onChange={e => setSubject(e.target.value)} onBlur={() => markTouched("subject")} className={`w-full h-12 border-2 rounded-xl px-4 text-gray-700 focus:border-stra-teal bg-gray-50 focus:bg-white outline-none ${touched.subject && errors.subject ? "border-red-400" : "border-gray-200"}`}>
                     <option value="">Selecione um assunto...</option>
                     <option value="Dúvida Técnica">Dúvida Técnica</option>
                     <option value="Cotação/Comercial">Cotação Comercial</option>
@@ -57,21 +84,23 @@ export default function Contact() {
                     <option value="Parceria">Parceria</option>
                     <option value="Outro">Outro</option>
                   </select>
+                  {fieldError("subject")}
                 </div>
               </div>
               
               <div>
                 <Label className="text-sm font-semibold text-gray-700 mb-2 block">Mensagem</Label>
                 <textarea 
-                  required
                   value={message}
                   onChange={e => setMessage(e.target.value)}
-                  className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white outline-none min-h-[150px] resize-y" 
+                  onBlur={() => markTouched("message")}
+                  className={`w-full p-4 border-2 rounded-xl focus:border-stra-teal bg-gray-50 focus:bg-white outline-none min-h-[150px] resize-y ${touched.message && errors.message ? "border-red-400" : "border-gray-200"}`}
                   placeholder="Como podemos ajudar sua instituição?"
                 />
+                {fieldError("message")}
               </div>
 
-              <Button type="submit" size="lg" className="w-full bg-stra-navy hover:bg-stra-navy/90 text-white h-14 rounded-xl font-bold text-lg gap-2 shadow-md">
+              <Button type="submit" size="lg" disabled={!isValid && Object.keys(touched).length > 0} className="w-full bg-stra-navy hover:bg-stra-navy/90 text-white h-14 rounded-xl font-bold text-lg gap-2 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
                 Enviar Mensagem <Send className="size-5" />
               </Button>
             </form>

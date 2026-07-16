@@ -1,9 +1,28 @@
+import { useMemo } from "react";
 import { Link } from "react-router";
 import { ArrowRight, Calendar, Tag } from "lucide-react";
 import { BLOG_POSTS } from "../data/catalog";
 import { Button } from "../components/ui/button";
 
 export default function Blog() {
+  const categoryCounts = useMemo(() => {
+    const categories: Record<string, string> = {
+      "Lançamentos": "Lançamentos",
+      "Eventos e Feiras": "Eventos e Feiras",
+      "Treinamentos": "Treinamentos",
+      "Artigos Científicos": "Artigos Científicos",
+      "Institucional": "Institucional",
+    };
+    const postCategories = BLOG_POSTS.map((_, i) => {
+      const cats = ["Lançamentos", "Eventos e Feiras", "Treinamentos", "Artigos Científicos", "Institucional"];
+      return cats[i % cats.length];
+    });
+    return Object.keys(categories).map((c) => ({
+      name: c,
+      count: postCategories.filter((pc) => pc === c).length,
+    }));
+  }, []);
+
   return (
     <div className="bg-gray-50 min-h-screen pb-24">
       {/* Header */}
@@ -30,7 +49,7 @@ export default function Blog() {
                 <div className="p-8 flex flex-col justify-center flex-1">
                   <div className="flex items-center gap-4 text-xs font-medium text-gray-500 mb-4">
                     <span className="flex items-center gap-1"><Calendar className="size-3.5" /> {post.date}</span>
-                    <span className="flex items-center gap-1 text-stra-teal"><Tag className="size-3.5" /> {i % 2 === 0 ? "Notícias" : "Institucional"}</span>
+                    <span className="flex items-center gap-1 text-stra-teal"><Tag className="size-3.5" /> {["Lançamentos", "Eventos e Feiras", "Treinamentos", "Artigos Científicos", "Institucional"][i % 5]}</span>
                   </div>
                   <h2 className="text-2xl font-bold text-stra-navy mb-4 leading-snug group-hover:text-stra-teal transition-colors">
                     {post.title}
@@ -53,11 +72,11 @@ export default function Blog() {
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
               <h3 className="text-xl font-bold text-stra-navy mb-6">Categorias</h3>
               <ul className="space-y-3">
-                {["Lançamentos", "Eventos e Feiras", "Treinamentos", "Artigos Científicos", "Institucional"].map((c) => (
-                  <li key={c}>
+                {categoryCounts.map((c) => (
+                  <li key={c.name}>
                     <a href="#" className="flex items-center justify-between text-gray-600 hover:text-stra-teal font-medium">
-                      <span>{c}</span>
-                      <span className="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md">{(Math.random() * 10 + 2).toFixed(0)}</span>
+                      <span>{c.name}</span>
+                      <span className="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md">{c.count}</span>
                     </a>
                   </li>
                 ))}

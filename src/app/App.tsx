@@ -22,6 +22,7 @@ import Contact from "./pages/Contact";
 import Favorites from "./pages/Favorites";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import LandingV2 from "./pages/LandingV2";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -66,6 +67,8 @@ export default function App() {
             />
             <Route path="*" element={<NotFound />} />
           </Route>
+
+          <Route path="/v2" element={<LandingV2 />} />
 
           <Route
             path="/admin"

@@ -49,7 +49,7 @@ export function ProductCard({ product, hidePrice: forceHidePrice }: { product: P
         <img 
           src={product.images[0]} 
           alt={product.name} 
-          className="size-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-700 relative z-0" 
+          className="size-full object-contain group-hover:scale-105 transition-transform duration-700 relative z-0" 
         />
       </Link>
 

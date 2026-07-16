@@ -10,7 +10,7 @@ export default function Shop() {
   const [showFilters, setShowFilters] = useState(false);
 
   const q = params.get("q") || "";
-  const segmentFilt = params.get("segment")?.split(",").filter(Boolean) || [];
+  const segmentFilt = (params.get("segmento") || params.get("segment"))?.split(",").filter(Boolean) || [];
   const brandFilt = params.get("brand")?.split(",").filter(Boolean) || [];
 
   const updateFilt = (key: "segment" | "brand", val: string, isChecked: boolean) => {

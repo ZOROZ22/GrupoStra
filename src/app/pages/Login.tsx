@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, useLocation, Link } from "react-router";
 import { useStore } from "../store";
 import { COMPANY } from "../data/catalog";
 import { Button } from "../components/ui/button";
@@ -9,16 +9,18 @@ import { Label } from "../components/ui/label";
 export default function Login() {
   const { login } = useStore();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as { from?: string })?.from;
   const [email, setEmail] = useState("");
 
   const submit = () => {
     login({ name: "Dra. Marina Alves", email: email || "marina@clinica.com", accountType: "Médica", crmStatus: "aprovado", council: "CRM-SC 12345", role: "cliente" });
-    navigate("/painel");
+    navigate(from || "/painel");
   };
 
   const submitAdmin = () => {
     login({ name: "Admin Grupo Stra", email: email || "admin@grupostra.com.br", accountType: "Administrador", crmStatus: "n/a", role: "admin" });
-    navigate("/admin");
+    navigate(from || "/admin");
   };
 
   return (

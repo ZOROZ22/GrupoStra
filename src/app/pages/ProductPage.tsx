@@ -64,7 +64,7 @@ export default function ProductPage() {
             <img 
               src={product.images[activeImg]} 
               alt={product.name} 
-              className="max-w-full max-h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" 
+              className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500" 
             />
           </div>
           {product.images.length > 1 && (
@@ -77,7 +77,7 @@ export default function ProductPage() {
                     i === activeImg ? "border-stra-teal shadow-md" : "border-transparent hover:border-gray-200"
                   }`}
                 >
-                  <img src={img} alt="" className="size-full object-contain mix-blend-multiply" />
+                  <img src={img} alt="" className="size-full object-contain" />
                 </button>
               ))}
             </div>
