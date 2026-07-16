@@ -53,7 +53,7 @@ export function ProductCard({ product, hidePrice: forceHidePrice }: { product: P
           <img 
             src={product.images[0]} 
             alt={product.name} 
-            className="absolute inset-0 w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-700 mix-blend-normal" 
+            className="absolute inset-0 w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-700 mix-blend-multiply" 
           />
           
           {/* Bottom fade for seamless transition */}

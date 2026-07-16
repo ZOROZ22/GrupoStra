@@ -64,7 +64,7 @@ export default function ProductPage() {
             <img 
               src={product.images[activeImg]} 
               alt={product.name} 
-              className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500" 
+              className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" 
             />
           </div>
           {product.images.length > 1 && (
