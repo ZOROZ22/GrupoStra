@@ -161,7 +161,7 @@ export default function Home() {
                   transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                   src={slide.image} 
                   alt={slide.title}
-                  className="max-h-[550px] w-auto object-contain drop-shadow-xl relative z-20 rounded-2xl mix-blend-multiply"
+                  className="max-h-[550px] w-auto object-contain drop-shadow-xl relative z-20 rounded-2xl"
                 />
               </div>
             </div>

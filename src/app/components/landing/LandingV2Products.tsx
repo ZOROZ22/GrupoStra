@@ -86,11 +86,11 @@ export default function LandingV2Products() {
                 }}
               >
                 {/* Image area */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-white/5 to-white/[0.02]">
+                <div className="relative aspect-[4/3] overflow-hidden bg-white">
                   <img
                     src={product.images[0]}
                     alt={product.name}
-                    className="w-full h-full object-contain p-6 transition-transform duration-700 group-hover:scale-110 mix-blend-multiply"
+                    className="w-full h-full object-contain p-6 transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"
                   />
                   {/* Badge */}

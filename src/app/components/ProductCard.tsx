@@ -22,7 +22,7 @@ export function ProductCard({ product, hidePrice: forceHidePrice }: { product: P
 
       <div className="relative z-10 flex flex-col h-full">
         {/* Imagem Area */}
-        <div className="relative h-64 overflow-hidden bg-gray-50/50">
+        <div className="relative h-64 overflow-hidden bg-white">
           <Link to={`/produto/${product.slug}`} className="absolute inset-0 z-10">
             {/* Shimmer effect on hover */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none">
@@ -53,7 +53,7 @@ export function ProductCard({ product, hidePrice: forceHidePrice }: { product: P
           <img 
             src={product.images[0]} 
             alt={product.name} 
-            className="absolute inset-0 w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-700 mix-blend-multiply" 
+            className="absolute inset-0 w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-700" 
           />
           
           {/* Bottom fade for seamless transition */}

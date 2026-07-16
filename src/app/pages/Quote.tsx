@@ -81,8 +81,8 @@ export default function Quote() {
               <div className="space-y-6">
                 {quote.map((item) => (
                   <div key={item.product.id} className="flex gap-6 pb-6 border-b border-gray-50 last:border-0 last:pb-0">
-                    <Link to={`/produto/${item.product.slug}`} className="size-24 shrink-0 rounded-2xl bg-gray-50 border border-gray-100 p-3 flex items-center justify-center">
-                      <img src={item.product.images[0]} alt={item.product.name} className="max-w-full max-h-full object-contain mix-blend-multiply" />
+                    <Link to={`/produto/${item.product.slug}`} className="size-24 shrink-0 rounded-2xl bg-white border border-gray-100 p-3 flex items-center justify-center">
+                      <img src={item.product.images[0]} alt={item.product.name} className="max-w-full max-h-full object-contain" />
                     </Link>
                     
                     <div className="flex-1 flex flex-col min-w-0">

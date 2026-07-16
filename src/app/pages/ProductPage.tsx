@@ -55,7 +55,7 @@ export default function ProductPage() {
       {/* Hero */}
       <section className="max-w-[1280px] mx-auto px-4 py-10 grid md:grid-cols-2 gap-12 lg:gap-16">
         <div>
-          <div className="aspect-[4/3] bg-gray-50 rounded-3xl p-8 border border-gray-100 flex items-center justify-center relative overflow-hidden group">
+          <div className="aspect-square bg-white flex items-center justify-center p-8 group">
             {product.badge && (
               <Badge className="absolute top-6 left-6 z-10 font-medium bg-stra-gold text-white text-sm px-3 py-1">
                 {product.badge}
@@ -64,18 +64,16 @@ export default function ProductPage() {
             <img 
               src={product.images[activeImg]} 
               alt={product.name} 
-              className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" 
+              className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500" 
             />
           </div>
           {product.images.length > 1 && (
             <div className="flex gap-4 mt-6 overflow-x-auto pb-2 scrollbar-hide">
-              {product.images.map((img, i) => (
+              {product.images.map((img, index) => (
                 <button 
-                  key={i} 
-                  onClick={() => setActiveImg(i)} 
-                  className={`relative shrink-0 size-24 rounded-2xl bg-gray-50 border-2 p-2 transition-all ${
-                    i === activeImg ? "border-stra-teal shadow-md" : "border-transparent hover:border-gray-200"
-                  }`}
+                  key={index} 
+                  onClick={() => setActiveImg(index)} 
+                  className={`size-20 bg-white rounded-2xl border-2 overflow-hidden flex items-center justify-center p-2 transition-all duration-300 ${activeImg === index ? "border-stra-teal shadow-md shadow-stra-teal/20" : "border-gray-100 hover:border-gray-300 opacity-70 hover:opacity-100"}`}
                 >
                   <img src={img} alt="" className="size-full object-contain" />
                 </button>
